@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const client = require("@mailchimp/mailchimp_marketing");
 const { log } = require('console');
+require('dotenv').config();
 
 const app = express();
 
@@ -14,8 +15,8 @@ const listID = 'cf0f6ae6c6';
 const url = 'https://us12.api.mailchimp.com/3.0/';
 
 client.setConfig({
-    apiKey: apiKey,
-    server: "us12"
+    apiKey: process.env.APIKEY,
+    server: process.env.SERVER
 });
 
 app.get('/', (req, res) => {
@@ -69,4 +70,7 @@ app.post('/home', (req, res) => {
     res.redirect('/');
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(process.env.APIKEY);
+    console.log(process.env.SERVER);
+});
